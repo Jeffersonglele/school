@@ -1,0 +1,4 @@
+# Les scripts lancés dans Linux doivent garder des fins de ligne LF (sinon "no such file" au démarrage)
+*.sh text eol=lf
+Dockerfile text eol=lf
+docker/** text eol=lf

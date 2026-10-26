@@ -1,0 +1,26 @@
+# Versionnement et éditeur
+.git
+.gitignore
+.gitattributes
+.idea
+.vscode
+.claude
+
+# Secrets et configuration locale : jamais dans l'image
+.env
+.env.*
+!.env.example
+
+# Dépendances : réinstallées proprement (sans dev) dans l'image
+vendor
+node_modules
+
+# Dump SQL d'origine (contient des données personnelles de test).
+# Le schéma de production est docker/db/schema.sql.
+*.sql
+!docker/db/schema.sql
+
+# Docs et fichiers inutiles en production
+*.md
+*.log
+Affichage.html

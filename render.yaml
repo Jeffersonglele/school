@@ -1,0 +1,57 @@
+# Blueprint Render : site PHP (Docker) + base MariaDB privée avec disque.
+# ATTENTION : Render n'a pas de MySQL managé (seulement PostgreSQL), et un disque
+# persistant exige une instance payante. Voir DEPLOIEMENT_RENDER.md pour l'alternative
+# "base MySQL externe" (supprimez alors le service school-db et renseignez DB_* à la main).
+services:
+  - type: web
+    name: school
+    runtime: docker
+    plan: starter
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /healthz.php
+    envVars:
+      - key: DB_HOST
+        fromService:
+          type: pserv
+          name: school-db
+          property: host
+      - key: DB_PORT
+        value: "3306"
+      - key: DB_DATABASE
+        value: projet1
+      - key: DB_USERNAME
+        value: school
+      - key: DB_PASSWORD
+        fromService:
+          type: pserv
+          name: school-db
+          envVarKey: MARIADB_PASSWORD
+      - key: FEDAPAY_API_KEY
+        sync: false          # à saisir dans le tableau de bord (secret)
+      - key: FEDAPAY_ENVIRONMENT
+        value: sandbox       # passer à "live" avec la clé sk_live_...
+      - key: APP_URL
+        sync: false          # ex. https://school.onrender.com
+
+  - type: pserv
+    name: school-db
+    runtime: docker
+    plan: starter
+    region: frankfurt        # même région que le site, obligatoire pour le réseau privé
+    dockerfilePath: ./docker/mariadb/Dockerfile
+    dockerContext: ./docker/mariadb
+    disk:
+      name: school-db-data
+      mountPath: /var/lib/mysql
+      sizeGB: 1
+    envVars:
+      - key: MARIADB_DATABASE
+        value: projet1
+      - key: MARIADB_USER
+        value: school
+      - key: MARIADB_PASSWORD
+        generateValue: true
+      - key: MARIADB_ROOT_PASSWORD
+        generateValue: true
