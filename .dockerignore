@@ -23,4 +23,3 @@ node_modules
 # Docs et fichiers inutiles en production
 *.md
 *.log
-Affichage.html
