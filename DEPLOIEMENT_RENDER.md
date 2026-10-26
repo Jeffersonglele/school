@@ -49,7 +49,9 @@ Les données MariaDB sont dans le volume `db_data` (elles survivent à `docker c
 | `DB_DATABASE` | oui | `projet1` |
 | `DB_USERNAME` | oui | `school` |
 | `DB_PASSWORD` | oui | mot de passe de la base (secret) |
-| `DB_SSL_CA` | non | `/etc/ssl/certs/ca-certificates.crt` si l'hébergeur MySQL impose TLS |
+| `DB_SSL` | non | `true` si l'hébergeur MySQL impose TLS (Aiven : oui) |
+| `DB_SSL_VERIFY` | non (`true`) | `false` avec Aiven (certificat signé par une CA privée) : la connexion est chiffrée mais le certificat n'est pas vérifié |
+| `DB_SSL_CA` | non | chemin d'un certificat CA précis, à la place de `DB_SSL` |
 | `FEDAPAY_API_KEY` | oui pour payer | `sk_sandbox_...` ou `sk_live_...` (secret) |
 | `FEDAPAY_ENVIRONMENT` | non (`sandbox`) | `sandbox` ou `live` |
 | `APP_URL` | recommandé | `https://school.onrender.com` (sert aux callbacks de paiement) |

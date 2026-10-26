@@ -36,7 +36,8 @@ CREATE TABLE IF NOT EXISTS `annee_scolaires` (
   `libelle` varchar(255) NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -59,7 +60,8 @@ CREATE TABLE IF NOT EXISTS `classes` (
   `nom` varchar(255) NOT NULL,
   `cycle_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -91,7 +93,8 @@ CREATE TABLE IF NOT EXISTS `cycles` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `nom` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -122,7 +125,8 @@ CREATE TABLE IF NOT EXISTS `eleves` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `lieu_naissance` varchar(100) NOT NULL,
-  `niveau` varchar(20) NOT NULL
+  `niveau` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -144,7 +148,8 @@ CREATE TABLE IF NOT EXISTS `failed_jobs` (
   `queue` text NOT NULL,
   `payload` longtext NOT NULL,
   `exception` longtext NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -160,7 +165,8 @@ CREATE TABLE IF NOT EXISTS `inscriptions` (
   `annee_scolaire_id` bigint(20) UNSIGNED NOT NULL,
   `date_inscription` date NOT NULL DEFAULT '2025-04-16',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -178,7 +184,8 @@ CREATE TABLE IF NOT EXISTS `inscriptions` (
 CREATE TABLE IF NOT EXISTS `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
   `migration` varchar(255) NOT NULL,
-  `batch` int(11) NOT NULL
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -195,7 +202,8 @@ CREATE TABLE IF NOT EXISTS `notifications` (
   `data` text NOT NULL,
   `read_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -214,7 +222,8 @@ CREATE TABLE IF NOT EXISTS `paiements` (
   `description` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `type_paiement` enum('total','tranche') NOT NULL
+  `type_paiement` enum('total','tranche') NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -238,7 +247,8 @@ CREATE TABLE IF NOT EXISTS `parent_tuteurs` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -256,7 +266,8 @@ CREATE TABLE IF NOT EXISTS `parent_tuteurs` (
 CREATE TABLE IF NOT EXISTS `password_resets` (
   `email` varchar(255) NOT NULL,
   `token` varchar(255) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -281,7 +292,8 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -299,7 +311,8 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   `transaction_id` varchar(255) NOT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'pending',
   `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -324,7 +337,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `telephone` varchar(20) DEFAULT NULL,
-  `adresse` text DEFAULT NULL
+  `adresse` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -340,41 +354,31 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 -- Index pour la table `annee_scolaires`
 --
-ALTER TABLE `annee_scolaires`
-  ADD PRIMARY KEY (`id`);
-
 --
 -- Index pour la table `classes`
 --
 ALTER TABLE `classes`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `classes_cycle_id_foreign` (`cycle_id`);
 
 --
 -- Index pour la table `cycles`
 --
-ALTER TABLE `cycles`
-  ADD PRIMARY KEY (`id`);
-
 --
 -- Index pour la table `eleves`
 --
 ALTER TABLE `eleves`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `eleves_parent_tuteur_id_foreign` (`parent_tuteur_id`);
 
 --
 -- Index pour la table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
-  ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
 -- Index pour la table `inscriptions`
 --
 ALTER TABLE `inscriptions`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `inscriptions_eleve_id_foreign` (`eleve_id`),
   ADD KEY `inscriptions_classe_id_foreign` (`classe_id`),
   ADD KEY `inscriptions_annee_scolaire_id_foreign` (`annee_scolaire_id`);
@@ -382,42 +386,32 @@ ALTER TABLE `inscriptions`
 --
 -- Index pour la table `migrations`
 --
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
-
 --
 -- Index pour la table `notifications`
 --
 ALTER TABLE `notifications`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`);
 
 --
 -- Index pour la table `paiements`
 --
 ALTER TABLE `paiements`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `paiements_eleve_id_foreign` (`eleve_id`);
 
 --
 -- Index pour la table `parent_tuteurs`
 --
 ALTER TABLE `parent_tuteurs`
-  ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `parent_tuteurs_email_unique` (`email`),
   ADD KEY `parent_tuteurs_user_id_foreign` (`user_id`);
 
 --
 -- Index pour la table `password_resets`
 --
-ALTER TABLE `password_resets`
-  ADD PRIMARY KEY (`email`);
-
 --
 -- Index pour la table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
@@ -425,14 +419,12 @@ ALTER TABLE `personal_access_tokens`
 -- Index pour la table `transactions`
 --
 ALTER TABLE `transactions`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `eleve_id` (`eleve_id`);
 
 --
 -- Index pour la table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
